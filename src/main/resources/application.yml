@@ -1,0 +1,32 @@
+server:
+  port: 8443
+  ssl:
+    key-store-type: PKCS12
+    key-store: classpath:keystore.p12
+    key-store-password: ${keystore_password}
+    key-alias: tomcat
+security:
+  requite-ssl: true
+spring:
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+#  security:
+#    user:
+#      name: domipapa
+#      password: lmaokek
+  datasource:
+    url: jdbc:postgresql://localhost/tinyexpense
+#    username: tiny
+#    password: tinypass
+    username: localuser
+    password: localpass
+  jpa:
+    hibernate:
+      ddl-auto: update
+      properties:
+        hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
