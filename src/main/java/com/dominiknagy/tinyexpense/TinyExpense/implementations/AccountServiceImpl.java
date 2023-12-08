@@ -22,7 +22,11 @@ public class AccountServiceImpl implements AccountService {
         this.passwordService = passwordService;
     }
 
+    @Override
     public Account createAccount(CreateAccountRequest createAccountRequest) {
+        if (accountRepository.findAccountByEmail(createAccountRequest.getEmail()).isPresent())
+            return null;
+
         Account account = new Account();
 
         account.setEmail(createAccountRequest.getEmail());
@@ -37,5 +41,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account retrieveAccount(String accountId) {
         return accountRepository.findAccountById(UUID.fromString(accountId)).orElse(null);
+    }
+
+    @Override
+    public Account loginUser(String userEmail, String password) {
+        Account account = accountRepository.findAccountByEmail(userEmail).orElse(null);
+        if (account == null) return null;
+        if (passwordService.authorizeUser(account, password)) return account;
+        else return null;
     }
 }

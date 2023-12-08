@@ -6,4 +6,5 @@ import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateAccountRequest;
 public interface AccountService {
     Account createAccount(CreateAccountRequest createAccountRequest);
     Account retrieveAccount(String accountId);
+    Account loginUser(String email, String password);
 }

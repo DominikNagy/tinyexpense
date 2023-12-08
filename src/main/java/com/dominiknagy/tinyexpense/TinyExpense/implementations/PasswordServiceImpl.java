@@ -6,6 +6,7 @@ import com.dominiknagy.tinyexpense.TinyExpense.repositories.PasswordRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.services.PasswordService;
 import com.dominiknagy.tinyexpense.TinyExpense.utility.SaltGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,8 @@ public class PasswordServiceImpl implements PasswordService {
 
     public void createHashedPassword(String passToHash, Account account) {
         Password password = new Password();
-        String salt = SaltGenerator.generateSalt();
-        String hashedPassword = bCryptPasswordEncoder.encode(salt + passToHash);
+        String salt = bCryptPasswordEncoder.encode(SaltGenerator.generateSalt());
+        String hashedPassword = BCrypt.hashpw(passToHash, salt);
 
         password.setPassword(hashedPassword);
         password.setSaltValue(salt);
@@ -34,8 +35,11 @@ public class PasswordServiceImpl implements PasswordService {
         passwordRepository.save(password);
     }
 
-//    public boolean validatePassword(String passToValidate) {
-//
-//        return bCryptPasswordEncoder.matches(passToValidate, )
-//    }
+    @Override
+    public boolean authorizeUser(Account account, String password) {
+        Password savedPassword = passwordRepository.findPasswordByAccount(account).orElse(null);
+        if (savedPassword == null) return false;
+        String hashedReceivedPassword = BCrypt.hashpw(password, savedPassword.getSaltValue());
+        return hashedReceivedPassword.equals(savedPassword.getPassword());
+    }
 }
