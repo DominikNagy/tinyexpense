@@ -5,23 +5,18 @@ import com.dominiknagy.tinyexpense.TinyExpense.entities.account.Password;
 import com.dominiknagy.tinyexpense.TinyExpense.repositories.PasswordRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.services.PasswordService;
 import com.dominiknagy.tinyexpense.TinyExpense.utility.SaltGenerator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class PasswordServiceImpl implements PasswordService {
 
     private final PasswordRepository passwordRepository;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    public PasswordServiceImpl(PasswordRepository passwordRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.passwordRepository = passwordRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
 
     public void createHashedPassword(String passToHash, Account account) {
         Password password = new Password();

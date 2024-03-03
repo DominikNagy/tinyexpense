@@ -4,23 +4,18 @@ import com.dominiknagy.tinyexpense.TinyExpense.entities.account.Account;
 import com.dominiknagy.tinyexpense.TinyExpense.repositories.AccountRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateAccountRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.services.AccountService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
     private final PasswordServiceImpl passwordService;
-
-
-    @Autowired
-    public AccountServiceImpl(AccountRepository accountRepository, PasswordServiceImpl passwordService) {
-        this.accountRepository = accountRepository;
-        this.passwordService = passwordService;
-    }
 
     @Override
     public Account createAccount(CreateAccountRequest createAccountRequest) {

@@ -3,6 +3,8 @@ package com.dominiknagy.tinyexpense.TinyExpense.controllers;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.account.Account;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateAccountRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.implementations.AccountServiceImpl;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,19 +18,17 @@ import java.util.Base64;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/account")
+@RequiredArgsConstructor
+@Slf4j
 public class AccountController {
 
     private final AccountServiceImpl accountServiceImpl;
-
-    @Autowired
-    public AccountController(AccountServiceImpl accountServiceImpl) {
-        this.accountServiceImpl = accountServiceImpl;
-    }
 
     @PostMapping("/create")
     public ResponseEntity<?> createAccount(@RequestBody CreateAccountRequest createAccountRequest) {
         Account account = accountServiceImpl.createAccount(createAccountRequest);
         if (account == null) return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        log.info("New account created '" +createAccountRequest.getName()+ "'");
         return ResponseEntity.created(URI.create("/account/" + account.getId())).body(account);
     }
 

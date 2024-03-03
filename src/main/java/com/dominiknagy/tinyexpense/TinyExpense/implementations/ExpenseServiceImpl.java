@@ -5,6 +5,7 @@ import com.dominiknagy.tinyexpense.TinyExpense.repositories.ExpenseRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateExpenseRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.ExpenseResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ExpenseService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,19 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ExpenseServiceImpl implements ExpenseService {
 
     private final ExpenseRepository expenseRepository;
     private final AccountServiceImpl accountService;
     private final ExpenseCategoryServiceImpl expenseCategoryService;
-
-    @Autowired
-    public ExpenseServiceImpl(ExpenseRepository expenseRepository, AccountServiceImpl accountService,
-                              ExpenseCategoryServiceImpl expenseCategoryService) {
-        this.expenseRepository = expenseRepository;
-        this.accountService = accountService;
-        this.expenseCategoryService = expenseCategoryService;
-    }
 
     @Override
     public Expense createExpense(CreateExpenseRequest createExpenseRequest, String accountId) {

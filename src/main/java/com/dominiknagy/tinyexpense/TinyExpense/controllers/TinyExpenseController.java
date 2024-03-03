@@ -5,6 +5,7 @@ import com.dominiknagy.tinyexpense.TinyExpense.implementations.ExpenseServiceImp
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateExpenseCategoryRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateExpenseRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.GenericResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,16 +16,12 @@ import java.time.LocalDateTime;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class TinyExpenseController {
 
     private final ExpenseServiceImpl expenseService;
     private final ExpenseCategoryServiceImpl expenseCategoryService;
 
-    @Autowired
-    public TinyExpenseController(ExpenseServiceImpl expenseService, ExpenseCategoryServiceImpl expenseCategoryService) {
-        this.expenseService = expenseService;
-        this.expenseCategoryService = expenseCategoryService;
-    }
 
     @PostMapping("/expenses")
     public ResponseEntity<?> createExpense(
@@ -46,7 +43,6 @@ public class TinyExpenseController {
 
     @DeleteMapping("/expenses/{expenseId}")
     public ResponseEntity<?> deleteExpense(@PathVariable long expenseId) {
-        System.out.println("CALLED " + LocalDateTime.now());
         expenseService.deleteExpense(expenseId);
         return ResponseEntity.ok(new GenericResponse("Expense deleted"));
     }
