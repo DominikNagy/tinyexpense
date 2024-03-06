@@ -3,6 +3,7 @@ package com.dominiknagy.tinyexpense.TinyExpense.controllers;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.account.Account;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateAccountRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.implementations.AccountServiceImpl;
+import com.dominiknagy.tinyexpense.TinyExpense.responses.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,11 @@ public class AccountController {
         String userPassword = credentials[1];
 
         Account account = accountServiceImpl.loginUser(userEmail, userPassword);
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setAccount(account);
+        loginResponse.setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c");
 
-        if (account != null) return ResponseEntity.ok(account);
+        if (account != null) return ResponseEntity.ok(loginResponse);
         else return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 }
