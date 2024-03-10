@@ -18,13 +18,16 @@ spring:
 #      name: domipapa
 #      password: lmaokek
   datasource:
-    url: jdbc:mysql://localhost:3307/tinyexpense
+    url: jdbc:postgresql://localhost:5432/tinyexpense
     username: localuser
     password: localpass
+    driver-class-name: org.postgresql.Driver
   jpa:
-    hibernate:
-      ddl-auto: update
-      properties:
-        hibernate.dialect: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    ddl-auto: update
+#    hibernate:
+#      ddl-auto: update
+#      properties:
+#        hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
 

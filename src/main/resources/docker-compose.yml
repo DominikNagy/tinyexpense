@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  app:
+    image: 'tinyexpense:latest'
+    build:
+      context: .
+    container_name: tinyapp
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tinyexpense
+      - SPRING_DATASOURCE_USERNAME=localuser
+      - SPRING_DATASOURCE_PASSWORD=localpass
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  db:
+    image: postgres:14-alpine
+    container_name: tinydb
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=localpass
+      - POSTGRES_USER=localuser
+      - POSTGRES_DB=tinyexpense
