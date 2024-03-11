@@ -10,8 +10,8 @@
       name: build and publish application
       runs-on: ubuntu-latest
       env:
-        DB_USERNAME: ${{ secrets.DB_USERNAME }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+#        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+#        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
       steps:
         - name: Checkout code

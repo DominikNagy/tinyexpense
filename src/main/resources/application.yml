@@ -6,8 +6,8 @@ spring:
     exclude: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
   datasource:
     url: jdbc:postgresql://192.168.178.210:5432/tinyexpense
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: tinydbuser
+    password: LuLeTinyPass123!
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
