@@ -8,6 +8,7 @@ class TinyExpenseApplicationTests {
 
 	@Test
 	void contextLoads() {
+		System.out.println("Test");
 	}
 
 }
