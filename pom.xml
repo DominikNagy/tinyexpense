@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.dominiknagy.tinyexpense</groupId>
 	<artifactId>TinyExpense</artifactId>
-	<version>1.0.5</version>
+	<version>1.0.6</version>
 	<name>TinyExpense</name>
 	<description>A tiny application to keep track of your expenses.</description>
 	<properties>
