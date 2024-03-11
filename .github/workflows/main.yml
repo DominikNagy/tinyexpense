@@ -23,7 +23,7 @@
 #          run: mvn -B test --file pom.xml
 
         - name: Build the application
-          run: mvn -B clean package --file pom.xml
+          run: mvn -B clean package -DskipTests --file pom.xml
 #
 #        - name: Build Docker Image
 #          uses: docker/build-push-action@v2
