@@ -9,7 +9,10 @@
     build-publish:
       name: build and publish application
       runs-on: ubuntu-latest
-
+      env:
+        DB_USERNAME: ${{ secrets.DB_USERNAME }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB: ${{ secrets.DB }}
       steps:
         - name: Checkout code
           uses: actions/checkout@v3
@@ -21,11 +24,6 @@
             java-version: 17
 
         - name: Build the application
-          env:
-            DB_USERNAME: ${{ secrets.DB_USERNAME }}
-            DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-            DB: ${{ secrets.DB }}
-
           run:
             mvn -B clean package -DskipTests --file pom.xml
 
