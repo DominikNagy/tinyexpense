@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY target/tinyexpense.jar /app/tinyexpense.jar
 
-EXPOSE 8080
+EXPOSE 8081
 
 ENTRYPOINT ["java", "-jar", "tinyexpense.jar"]
