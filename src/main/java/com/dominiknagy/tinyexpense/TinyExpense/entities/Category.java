@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name = "expense_categories")
-public class ExpenseCategory {
+@Table(name = "categories")
+public class Category {
 
     @Id
     @GeneratedValue
@@ -18,11 +18,9 @@ public class ExpenseCategory {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
-
     private String categoryName;
     private Color color;
     private Timestamp createdAt;
-
 
     @PrePersist
     public void setCreatedAt() {

@@ -21,7 +21,7 @@ public class Expense {
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private ExpenseCategory expenseCategory;
+    private Category category;
 
     private String expenseDescription;
     private Double amount;

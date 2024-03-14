@@ -17,12 +17,12 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     private final ExpenseRepository expenseRepository;
     private final UserServiceImpl accountService;
-    private final ExpenseCategoryServiceImpl expenseCategoryService;
+    private final CategoryServiceImpl expenseCategoryService;
 
     @Override
     public Expense createExpense(CreateExpenseRequest createExpenseRequest, String accountId) {
         Expense expense = new Expense();
-        expense.setExpenseCategory(expenseCategoryService.retrieveExpenseCategory(createExpenseRequest.getExpenseCategoryId()));
+        expense.setCategory(expenseCategoryService.retrieveCategory(createExpenseRequest.getExpenseCategoryId()));
         expense.setUser(accountService.retrieveUser(accountId));
         expense.setExpenseDescription(createExpenseRequest.getExpenseDescription());
         expense.setAmount(createExpenseRequest.getAmount());
@@ -51,8 +51,8 @@ public class ExpenseServiceImpl implements ExpenseService {
             expenseResponse.setCurrency(expense.getCurrency());
             expenseResponse.setAmount(expense.getAmount());
             expenseResponse.setColor(expense.getColor());
-            expenseResponse.setCategoryName(expense.getExpenseCategory().getCategoryName());
-            expenseResponse.setCategoryColor(expense.getExpenseCategory().getColor());
+            expenseResponse.setCategoryName(expense.getCategory().getCategoryName());
+            expenseResponse.setCategoryColor(expense.getCategory().getColor());
 
             expenseResponses.add(expenseResponse);
         }
@@ -62,7 +62,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public List<Expense> retrieveExpensesInCategory(long categoryId) {
-        return expenseRepository.findExpensesByExpenseCategory(expenseCategoryService.retrieveExpenseCategory(categoryId));
+        return expenseRepository.findExpensesByCategory(expenseCategoryService.retrieveCategory(categoryId));
     }
 
     @Override
