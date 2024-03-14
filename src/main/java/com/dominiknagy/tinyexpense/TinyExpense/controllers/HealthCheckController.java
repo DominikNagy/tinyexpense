@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 public class HealthCheckController {
 
-    @GetMapping
+    @GetMapping("/hp")
     public ResponseEntity<?> retrieveAccount() {
         return ResponseEntity.noContent().build();
     }

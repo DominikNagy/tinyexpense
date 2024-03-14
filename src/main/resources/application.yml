@@ -16,12 +16,12 @@ spring:
       ddl-auto: update
 server:
   port : 8080
-logging:
-  level:
-    root: WARN
-    web: INFO
-    com:
-      example: DEBUG
+#logging:
+#  level:
+#    root: WARN
+#    web: INFO
+#    com:
+#      example: DEBUG
 token:
   expirationms: 3600000
   # JWT secret key

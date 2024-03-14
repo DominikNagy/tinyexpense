@@ -39,7 +39,7 @@ public class AccountController {
         return ResponseEntity.ok(accountServiceImpl.retrieveUser(accountId));
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> loginAccount(@RequestHeader(HttpHeaders.AUTHORIZATION) String authorizationHeader) {
         return ResponseEntity.ok().body(authenticationService.login(authorizationHeader));
     }
