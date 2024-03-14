@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 public class LoginResponse {
-    private UserProfileResponse userProfileResponse;
+    private UserProfileResponse userProfile;
     private String token;
 }
