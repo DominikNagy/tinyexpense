@@ -1,10 +1,10 @@
 package com.dominiknagy.tinyexpense.TinyExpense.entities;
 
 import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
+import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Color;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,10 +20,5 @@ public class Category {
     private User user;
     private String categoryName;
     private Color color;
-    private Timestamp createdAt;
-
-    @PrePersist
-    public void setCreatedAt() {
-        this.createdAt = Timestamp.valueOf(LocalDateTime.now());
-    }
+    private LocalDateTime createdAt;
 }

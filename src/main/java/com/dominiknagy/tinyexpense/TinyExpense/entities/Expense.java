@@ -1,6 +1,8 @@
 package com.dominiknagy.tinyexpense.TinyExpense.entities;
 
 import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
+import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Color;
+import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Currency;
 import jakarta.persistence.*;
 import lombok.Data;
 

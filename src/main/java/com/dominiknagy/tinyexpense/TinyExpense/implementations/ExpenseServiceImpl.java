@@ -47,7 +47,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             ExpenseResponse expenseResponse = new ExpenseResponse();
             expenseResponse.setId(expense.getId());
             expenseResponse.setExpenseDescription(expense.getExpenseDescription());
-            expenseResponse.setDate(expense.getDate());
+//            expenseResponse.setDate(expense.getDate());
             expenseResponse.setCurrency(expense.getCurrency());
             expenseResponse.setAmount(expense.getAmount());
             expenseResponse.setColor(expense.getColor());
