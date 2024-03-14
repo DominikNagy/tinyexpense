@@ -6,7 +6,6 @@ import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateExpenseCategoryReq
 import com.dominiknagy.tinyexpense.TinyExpense.responses.CategoryResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ExpenseCategoryService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,7 +16,7 @@ import java.util.List;
 public class ExpenseCategoryServiceImpl implements ExpenseCategoryService {
 
     private final ExpenseCategoryRepository expenseCategoryRepository;
-    private final AccountServiceImpl accountService;
+    private final UserServiceImpl accountService;
 
     @Override
     public ExpenseCategory retrieveExpenseCategory(long expenseCategoryId) {
@@ -29,7 +28,7 @@ public class ExpenseCategoryServiceImpl implements ExpenseCategoryService {
         List<CategoryResponse> categoryResponses = new ArrayList<>();
 
         for (ExpenseCategory expenseCategory :
-                expenseCategoryRepository.findExpenseCategoriesByAccount(accountService.retrieveAccount(accountId))) {
+                expenseCategoryRepository.findExpenseCategoriesByUser(accountService.retrieveUser(accountId))) {
 
             CategoryResponse categoryResponse = new CategoryResponse();
             categoryResponse.setId(expenseCategory.getId());
@@ -46,7 +45,7 @@ public class ExpenseCategoryServiceImpl implements ExpenseCategoryService {
             CreateExpenseCategoryRequest createExpenseCategoryRequest, String accountId) {
         ExpenseCategory expenseCategory = new ExpenseCategory();
         expenseCategory.setCategoryName(createExpenseCategoryRequest.getExpenseCategoryName());
-        expenseCategory.setAccount(accountService.retrieveAccount(accountId));
+        expenseCategory.setUser(accountService.retrieveUser(accountId));
         expenseCategory.setColor(createExpenseCategoryRequest.getColor());
 
         return expenseCategoryRepository.save(expenseCategory);

@@ -1,6 +1,6 @@
 package com.dominiknagy.tinyexpense.TinyExpense.entities;
 
-import com.dominiknagy.tinyexpense.TinyExpense.entities.account.Account;
+import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,6 +10,7 @@ import java.sql.Date;
 
 @Entity
 @Data
+@Table(name = "expenses")
 public class Expense {
 
     @Id
@@ -17,7 +18,7 @@ public class Expense {
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private Account account;
+    private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private ExpenseCategory expenseCategory;
