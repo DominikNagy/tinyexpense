@@ -8,8 +8,8 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.sql.Date;
 
-@Entity
 @Data
+@Entity
 @Table(name = "expenses")
 public class Expense {
 

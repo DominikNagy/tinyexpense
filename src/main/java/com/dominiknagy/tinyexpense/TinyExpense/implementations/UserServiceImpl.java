@@ -21,8 +21,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-//    private final PasswordServiceImpl passwordService;
-
 
     @Override
     public UserDetailsService userDetailsService() {
@@ -59,10 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User loginUser(String userEmail, String password) {
-        User user = userRepository.findUserByEmail(userEmail).orElse(null);
-        if (user == null) return null;
-//        if (passwordService.authorizeUser(user, password)) return user;
-        else return null;
+    public User retrieveUserByEmail(String userEmail) {
+        return userRepository.findUserByEmail(userEmail).orElse(null);
     }
 }

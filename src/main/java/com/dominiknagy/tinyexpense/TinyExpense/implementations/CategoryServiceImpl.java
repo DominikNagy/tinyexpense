@@ -25,30 +25,29 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<CategoryResponse> retrieveCategories() {
+    public List<CategoryResponse> retrieveCategories(String userEmail) {
         List<CategoryResponse> categoryResponses = new ArrayList<>();
 
-//        for (Category category :
-//                categoryRepository.findExpenseCategoriesByUser(userService.retrieveUser(accountId))) {
-//
-//            CategoryResponse categoryResponse = new CategoryResponse();
-//            categoryResponse.setId(category.getId());
-//            categoryResponse.setName(category.getCategoryName());
-//            categoryResponse.setColor(category.getColor());
-//
-//            categoryResponses.add(categoryResponse);
-//        }
+        for (Category category :
+                categoryRepository.findCategoriesByUser(userService.retrieveUserByEmail(userEmail))) {
+
+            CategoryResponse categoryResponse = new CategoryResponse();
+            categoryResponse.setId(category.getId());
+            categoryResponse.setName(category.getCategoryName());
+            categoryResponse.setColor(category.getColor());
+
+            categoryResponses.add(categoryResponse);
+        }
         return categoryResponses;
     }
 
     @Override
-    public Category createExpenseCategory(
-            CreateCategoryRequest createCategoryRequest) {
-
+    public Category createCategory(
+            CreateCategoryRequest createCategoryRequest, String userEmail) {
 
         Category category = new Category();
         category.setCategoryName(createCategoryRequest.getCategoryName());
-//        category.setUser(userService.retrieveUser(accountId));
+        category.setUser(userService.retrieveUserByEmail(userEmail));
         category.setColor(createCategoryRequest.getColor());
 
         return categoryRepository.save(category);

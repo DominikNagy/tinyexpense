@@ -14,13 +14,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
-public class TinyExpenseController {
+@CrossOrigin(origins = "*")
+public class ApplicationController {
 
     private final ExpenseService expenseService;
     private final CategoryService categoryService;
-
 
     @PostMapping("/expenses")
     public ResponseEntity<?> createExpense(
@@ -48,24 +47,22 @@ public class TinyExpenseController {
 
     @PostMapping("/categories")
     public ResponseEntity<?> createExpenseCategory(
-            @RequestBody CreateCategoryRequest createCategoryRequest,
-            @RequestParam String accountId) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON)
-                .body(categoryService.createExpenseCategory(createCategoryRequest));
+            @RequestBody CreateCategoryRequest createCategoryRequest, Authentication authentication) {
+
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return ResponseEntity
+                    .status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON)
+                    .body(categoryService.createCategory(createCategoryRequest, userDetails.getUsername()));
+        } else return null;
     }
 
     @GetMapping("/categories")
     public ResponseEntity<?> retrieveExpenseCategories(Authentication authentication) {
         if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            String userEmail = userDetails.getUsername(); // Assuming email is stored as username in UserDetails
-            System.out.println(userEmail);
-            // Use userEmail to retrieve categories from the database
-            categoryService.retrieveCategories(); // Adjust this according to your service method
-        }
-
-        return ResponseEntity.ok(null);
+            return ResponseEntity.ok(categoryService.retrieveCategories(userDetails.getUsername()));
+        } else return null;
     }
 
     @GetMapping("/categories/{categoryId}")

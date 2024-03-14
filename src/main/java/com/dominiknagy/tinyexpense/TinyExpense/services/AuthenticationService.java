@@ -1,15 +1,11 @@
 package com.dominiknagy.tinyexpense.TinyExpense.services;
 
-import com.dominiknagy.tinyexpense.TinyExpense.entities.account.Role;
 import com.dominiknagy.tinyexpense.TinyExpense.repositories.UserRepository;
-import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateUserRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.LoginUserRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;

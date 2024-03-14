@@ -8,16 +8,19 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 
-@RestController
-@RequestMapping("/health")
-@RequiredArgsConstructor
 @Slf4j
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/health")
 @CrossOrigin(origins = "*")
 public class HealthCheckController {
 
     @GetMapping("/status")
     public ResponseEntity<?> retrieveAccount() {
-        StatusResponse statusResponse = StatusResponse.builder().status("RUNNING").serverTime(LocalDateTime.now()).build();
+        StatusResponse statusResponse = new StatusResponse();
+        statusResponse.setStatus("RUNNING");
+        statusResponse.setServerTime(LocalDateTime.now());
+
         return ResponseEntity.ok(statusResponse);
     }
 }

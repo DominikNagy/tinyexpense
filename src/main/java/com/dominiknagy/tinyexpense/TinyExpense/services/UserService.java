@@ -7,6 +7,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserService {
     User createUser(CreateUserRequest createUserRequest);
     User retrieveUser(String userId);
-    User loginUser(String email, String password);
+    User retrieveUserByEmail(String userEmail);
     UserDetailsService userDetailsService();
 }

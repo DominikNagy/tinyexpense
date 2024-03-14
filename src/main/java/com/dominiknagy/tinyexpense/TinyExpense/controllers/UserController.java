@@ -3,7 +3,6 @@ package com.dominiknagy.tinyexpense.TinyExpense.controllers;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateUserRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.implementations.UserServiceImpl;
-import com.dominiknagy.tinyexpense.TinyExpense.responses.LoginResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,15 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
-@RestController
-@CrossOrigin(origins = "*")
-@RequestMapping("/account")
-@RequiredArgsConstructor
 @Slf4j
-public class AccountController {
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/account")
+@CrossOrigin(origins = "*")
+public class UserController {
 
     private final UserServiceImpl accountServiceImpl;
     private final AuthenticationService authenticationService;

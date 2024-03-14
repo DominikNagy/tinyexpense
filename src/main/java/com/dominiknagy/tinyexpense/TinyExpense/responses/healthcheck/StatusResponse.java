@@ -1,10 +1,10 @@
 package com.dominiknagy.tinyexpense.TinyExpense.responses.healthcheck;
 
-import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Builder
+@Data
 public class StatusResponse {
     private String status;
     private LocalDateTime serverTime;

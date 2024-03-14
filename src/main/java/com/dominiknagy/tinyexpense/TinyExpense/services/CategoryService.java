@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CategoryService {
     Category retrieveCategory(long expenseCategoryId);
-    List<CategoryResponse> retrieveCategories();
-    Category createExpenseCategory(CreateCategoryRequest createCategoryRequest);
+    List<CategoryResponse> retrieveCategories(String userEmail);
+    Category createCategory(CreateCategoryRequest createCategoryRequest, String userEmail);
     void deleteCategory(long categoryId);
 }
