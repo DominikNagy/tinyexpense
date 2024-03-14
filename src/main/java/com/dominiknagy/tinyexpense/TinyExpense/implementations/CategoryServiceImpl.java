@@ -28,8 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryResponse> retrieveCategories(String userEmail) {
         List<CategoryResponse> categoryResponses = new ArrayList<>();
 
-        for (Category category :
-                categoryRepository.findCategoriesByUser(userService.retrieveUserByEmail(userEmail))) {
+        for (Category category : categoryRepository.findCategoriesByUser(userService.retrieveUserByEmail(userEmail))) {
 
             CategoryResponse categoryResponse = new CategoryResponse();
             categoryResponse.setId(category.getId());
