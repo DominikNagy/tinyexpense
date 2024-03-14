@@ -1,486 +1,444 @@
 {
 	"info": {
-		"_postman_id": "e0d3c6be-dfd9-4113-a696-1117f008b6c8",
+		"_postman_id": "154fbcd3-6320-42ff-95e7-ef34f60b45b8",
 		"name": "tinyexpense",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4074048",
+		"_collection_link": "https://svissdev.postman.co/workspace/Team-Workspace~331c818d-cf95-4ed8-827a-ccff69e8192a/collection/4074048-154fbcd3-6320-42ff-95e7-ef34f60b45b8?action=share&source=collection_link&creator=4074048"
 	},
 	"item": [
 		{
-			"name": "create account",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "lmaokek",
-							"type": "string"
+			"name": "user",
+			"item": [
+				{
+					"name": "register User",
+					"request": {
+						"auth": {
+							"type": "noauth"
 						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Dominik\",\n    \"email\": \"asd3@asd.com\",\n    \"password\": \"jabu123hruska!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/account/create",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"account",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login User",
+					"event": [
 						{
-							"key": "username",
-							"value": "domipapa",
-							"type": "string"
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const responseJson = pm.response.json();\r",
+									"var token = responseJson.token;\r",
+									"pm.environment.set(\"token\", token)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-						"type": "default",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"Dominik\",\n    \"email\": \"asd@asd.com\",\n    \"password\": \"jabu123hruska!\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "https://api.dominiknagy.com/account/create",
-					"protocol": "https",
-					"host": [
-						"api",
-						"dominiknagy",
-						"com"
 					],
-					"path": [
-						"account",
-						"create"
-					]
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "asd3@asd.com",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "jabu123hruska!",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/account/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"account",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/account/profile",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"account",
+								"profile"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "get account",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
+			"name": "app",
+			"item": [
+				{
+					"name": "categories",
+					"item": [
 						{
-							"key": "password",
-							"value": "lmaokek",
-							"type": "string"
+							"name": "create category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"categoryName\": \"Housingos\",\n    \"color\": \"RED\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "username",
-							"value": "domipapa",
-							"type": "string"
+							"name": "retrieve category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/categories/1",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "retrieve categories",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/categories",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-						"type": "default",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "https://api.dominiknagy.com/account/febb3230-c909-4f82-8cd1-9517ad064b92",
-					"protocol": "https",
-					"host": [
-						"api",
-						"dominiknagy",
-						"com"
-					],
-					"path": [
-						"account",
-						"febb3230-c909-4f82-8cd1-9517ad064b92"
+				{
+					"name": "expenses",
+					"item": [
+						{
+							"name": "delete expense",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/expenses/161",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"expenses",
+										"161"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "retrieve expenses in a category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/categories/1/expenses",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"1",
+										"expenses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create expense",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"expenseCategoryId\": 53,\n    \"expenseDescription\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.\",\n    \"amount\": 53.01,\n    \"currency\": \"EUR\",\n    \"timestamp\": \"2023-04-17\",\n    \"color\": \"BLACK\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/expenses",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"expenses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "retrieve expenses",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/expenses/161",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"expenses",
+										"161"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "retrieve expense",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/expenses/160",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"expenses",
+										"160"
+									]
+								}
+							},
+							"response": []
+						}
 					]
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "create category",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "lmaokek",
-							"type": "string"
+			"name": "healthcheck",
+			"item": [
+				{
+					"name": "status",
+					"request": {
+						"auth": {
+							"type": "noauth"
 						},
-						{
-							"key": "username",
-							"value": "domipapa",
-							"type": "string"
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/health/status",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"health",
+								"status"
+							]
 						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-						"type": "default",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"expenseCategoryName\": \"Housing\",\n    \"color\": \"RED\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/categories?accountId=77e243df-510b-4535-a486-57501abce50e",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"categories"
-					],
-					"query": [
-						{
-							"key": "accountId",
-							"value": "77e243df-510b-4535-a486-57501abce50e"
-						}
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "retrieve category",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "lmaokek",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "domipapa",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-						"type": "default",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/categories/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"categories",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "retrieve expenses in a category",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "lmaokek",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "domipapa",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-						"type": "default",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/categories/1/expenses",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"categories",
-						"1",
-						"expenses"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "retrieve categories",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "lmaokek",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "domipapa",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-						"type": "default",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/categories?accountId=77e243df-510b-4535-a486-57501abce50e",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"categories"
-					],
-					"query": [
-						{
-							"key": "accountId",
-							"value": "77e243df-510b-4535-a486-57501abce50e"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "create expense",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "lmaokek",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "domipapa",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-						"type": "default",
-						"disabled": true
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"expenseCategoryId\": 53,\n    \"expenseDescription\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.\",\n    \"amount\": 53.01,\n    \"currency\": \"EUR\",\n    \"timestamp\": \"2023-04-17\",\n    \"color\": \"BLACK\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/expenses?accountId=77e243df-510b-4535-a486-57501abce50e",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"expenses"
-					],
-					"query": [
-						{
-							"key": "accountId",
-							"value": "77e243df-510b-4535-a486-57501abce50e"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "retrieve expense",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "lmaokek",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "domipapa",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-						"type": "default",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/expenses/160",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"expenses",
-						"160"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "delete expense",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "lmaokek",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "domipapa",
-							"type": "string"
-						}
-					]
-				},
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-						"type": "default",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/expenses/161",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"expenses",
-						"161"
-					],
-					"query": [
-						{
-							"key": "",
-							"value": null,
-							"disabled": true
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "retrieve expenses",
-			"request": {
-				"auth": {
-					"type": "basic",
-					"basic": [
-						{
-							"key": "password",
-							"value": "lmaokek",
-							"type": "string"
-						},
-						{
-							"key": "username",
-							"value": "domipapa",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-						"type": "default",
-						"disabled": true
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/expenses?accountId=77e243df-510b-4535-a486-57501abce50e",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"expenses"
-					],
-					"query": [
-						{
-							"key": "accountId",
-							"value": "77e243df-510b-4535-a486-57501abce50e"
-						}
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }
