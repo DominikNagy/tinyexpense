@@ -5,64 +5,55 @@ import com.dominiknagy.tinyexpense.TinyExpense.repositories.ExpenseRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateExpenseRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.ExpenseResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ExpenseService;
+import com.dominiknagy.tinyexpense.TinyExpense.utility.Mapper;
+import com.dominiknagy.tinyexpense.TinyExpense.utility.UserUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ExpenseServiceImpl implements ExpenseService {
 
     private final ExpenseRepository expenseRepository;
-    private final UserServiceImpl accountService;
-    private final CategoryServiceImpl expenseCategoryService;
+    private final CategoryServiceImpl categoryService;
 
     @Override
-    public Expense createExpense(CreateExpenseRequest createExpenseRequest, String accountId) {
-        Expense expense = new Expense();
-        expense.setCategory(expenseCategoryService.retrieveCategory(createExpenseRequest.getExpenseCategoryId()));
-        expense.setUser(accountService.retrieveUser(accountId));
-        expense.setExpenseDescription(createExpenseRequest.getExpenseDescription());
-        expense.setAmount(createExpenseRequest.getAmount());
-        expense.setColor(createExpenseRequest.getColor());
-        expense.setCurrency(createExpenseRequest.getCurrency());
-        expense.setDate(createExpenseRequest.getDate());
+    public ExpenseResponse createExpense(CreateExpenseRequest createExpenseRequest) {
+        Expense expense = Mapper.mapExpenseRequest(
+                createExpenseRequest, categoryService.retrieveCategory(createExpenseRequest.getCategoryId()));
 
-        return expenseRepository.save(expense);
+        return Mapper.mapExpenseResponse(expenseRepository.save(expense));
     }
 
     @Override
-    public Expense retrieveExpense(long expenseId) {
-        return expenseRepository.findExpenseById(expenseId).orElse(null);
+    public ExpenseResponse retrieveExpense(long expenseId) {
+        Expense expense = expenseRepository.findExpenseByIdAndUser(expenseId, UserUtils.authedUser()).orElseThrow();
+        return Mapper.mapExpenseResponse(expense);
     }
 
     @Override
-    public List<ExpenseResponse> retrieveExpenses(String accountId) {
-        List<Expense> expenses = expenseRepository.findExpensesByUser(accountService.retrieveUser(accountId));
+    public List<ExpenseResponse> retrieveExpenses() {
+        List<Expense> expenses = expenseRepository.findExpensesByUser(UserUtils.authedUser());
         List<ExpenseResponse> expenseResponses = new ArrayList<>();
 
         for (Expense expense : expenses) {
-            ExpenseResponse expenseResponse = new ExpenseResponse();
-            expenseResponse.setId(expense.getId());
-            expenseResponse.setExpenseDescription(expense.getExpenseDescription());
-//            expenseResponse.setDate(expense.getDate());
-            expenseResponse.setCurrency(expense.getCurrency());
-            expenseResponse.setAmount(expense.getAmount());
-            expenseResponse.setColor(expense.getColor());
-            expenseResponse.setCategoryName(expense.getCategory().getCategoryName());
-            expenseResponse.setCategoryColor(expense.getCategory().getColor());
-
-            expenseResponses.add(expenseResponse);
+            expenseResponses.add(Mapper.mapExpenseResponse(expense));
         }
 
         return expenseResponses;
     }
 
     @Override
-    public List<Expense> retrieveExpensesInCategory(long categoryId) {
-        return expenseRepository.findExpensesByCategory(expenseCategoryService.retrieveCategory(categoryId));
+    public List<ExpenseResponse> retrieveExpensesInCategory(long categoryId) {
+        List<Expense> expenses = expenseRepository.findExpensesByCategoryAndUser(
+                categoryService.retrieveCategory(categoryId), UserUtils.authedUser());
+
+        return expenses.stream().map(Mapper::mapExpenseResponse).toList();
     }
 
     @Override

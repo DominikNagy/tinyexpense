@@ -22,14 +22,19 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    @Column(nullable = false, unique = true)
-    private String name;
+
     @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false, unique = true)
     private String email;
     private String password;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private LocalDateTime lastLogin;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

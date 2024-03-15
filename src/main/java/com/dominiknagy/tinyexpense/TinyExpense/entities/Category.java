@@ -21,4 +21,5 @@ public class Category {
     private String categoryName;
     private Color color;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

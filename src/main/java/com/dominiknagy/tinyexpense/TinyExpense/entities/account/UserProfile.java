@@ -1,6 +1,5 @@
-package com.dominiknagy.tinyexpense.TinyExpense.entities;
+package com.dominiknagy.tinyexpense.TinyExpense.entities.account;
 
-import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Currency;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -11,9 +10,10 @@ import lombok.Data;
 public class UserProfile {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private Currency currency;
 
     @OneToOne(fetch = FetchType.EAGER)

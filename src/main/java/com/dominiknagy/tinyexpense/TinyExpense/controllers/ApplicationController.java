@@ -7,10 +7,7 @@ import com.dominiknagy.tinyexpense.TinyExpense.services.CategoryService;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,16 +19,13 @@ public class ApplicationController {
     private final CategoryService categoryService;
 
     @PostMapping("/expenses")
-    public ResponseEntity<?> createExpense(
-            @RequestBody CreateExpenseRequest createExpenseRequest, @RequestParam String accountId) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON)
-                .body(expenseService.createExpense(createExpenseRequest, accountId));
+    public ResponseEntity<?> createExpense(@RequestBody CreateExpenseRequest createExpenseRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(expenseService.createExpense(createExpenseRequest));
     }
 
     @GetMapping("/expenses")
-    public ResponseEntity<?> retrieveExpenses(@RequestParam String accountId) {
-        return ResponseEntity.ok(expenseService.retrieveExpenses(accountId));
+    public ResponseEntity<?> retrieveExpenses() {
+        return ResponseEntity.ok(expenseService.retrieveExpenses());
     }
 
     @GetMapping("/expenses/{expenseId}")
@@ -46,28 +40,18 @@ public class ApplicationController {
     }
 
     @PostMapping("/categories")
-    public ResponseEntity<?> createExpenseCategory(
-            @RequestBody CreateCategoryRequest createCategoryRequest, Authentication authentication) {
-
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return ResponseEntity
-                    .status(HttpStatus.CREATED).contentType(MediaType.APPLICATION_JSON)
-                    .body(categoryService.createCategory(createCategoryRequest, userDetails.getUsername()));
-        } else return null;
+    public ResponseEntity<?> createExpenseCategory(@RequestBody CreateCategoryRequest createCategoryRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(createCategoryRequest));
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<?> retrieveExpenseCategories(Authentication authentication) {
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return ResponseEntity.ok(categoryService.retrieveCategories(userDetails.getUsername()));
-        } else return null;
+    public ResponseEntity<?> retrieveExpenseCategories() {
+        return ResponseEntity.ok(categoryService.retrieveCategories());
     }
 
     @GetMapping("/categories/{categoryId}")
     public ResponseEntity<?> retrieveExpenseCategory(@PathVariable long categoryId) {
-        return ResponseEntity.ok(categoryService.retrieveCategory(categoryId));
+        return ResponseEntity.ok(categoryService.retrieveCategoryAsResponse(categoryId));
     }
 
     @DeleteMapping("/categories/{categoryId}")

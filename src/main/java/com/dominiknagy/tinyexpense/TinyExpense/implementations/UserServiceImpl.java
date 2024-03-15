@@ -2,8 +2,10 @@ package com.dominiknagy.tinyexpense.TinyExpense.implementations;
 
 import com.dominiknagy.tinyexpense.TinyExpense.entities.account.Role;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
+import com.dominiknagy.tinyexpense.TinyExpense.entities.account.UserProfile;
 import com.dominiknagy.tinyexpense.TinyExpense.repositories.UserRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateUserRequest;
+import com.dominiknagy.tinyexpense.TinyExpense.services.ProfileService;
 import com.dominiknagy.tinyexpense.TinyExpense.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +23,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ProfileService profileService;
 
     @Override
     public UserDetailsService userDetailsService() {
@@ -34,10 +37,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(CreateUserRequest createUserRequest) {
-        if (userRepository.findUserByEmail(createUserRequest.getEmail()).isPresent())
-            return null;
+    public User lastLoginUpdate(User user) {
+        user.setLastLogin(LocalDateTime.now());
+        return userRepository.save(user);
+    }
 
+    @Override
+    public User createUser(CreateUserRequest createUserRequest) {
         User user = new User();
         user.setEmail(createUserRequest.getEmail());
         user.setName(createUserRequest.getName());
@@ -48,12 +54,14 @@ public class UserServiceImpl implements UserService {
 
         user = userRepository.save(user);
 
+        profileService.createUserProfile(user);
+
         return user;
     }
 
     @Override
-    public User retrieveUser(String userId) {
-        return userRepository.findUserById(UUID.fromString(userId)).orElse(null);
+    public User retrieveUser(String userEmail) {
+        return userRepository.findUserByEmail(userEmail).orElse(null);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.dominiknagy.tinyexpense.TinyExpense.filters;
 
+import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
 import com.dominiknagy.tinyexpense.TinyExpense.services.JwtService;
 import com.dominiknagy.tinyexpense.TinyExpense.services.UserService;
 import jakarta.servlet.FilterChain;
@@ -55,6 +56,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 context.setAuthentication(authToken);
                 SecurityContextHolder.setContext(context);
+
+                //update last login for user
+                userService.lastLoginUpdate((User) userDetails);
             }
         }
 
