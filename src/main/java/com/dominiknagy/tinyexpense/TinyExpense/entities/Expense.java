@@ -28,7 +28,7 @@ public class Expense {
     private String expenseDescription;
     private Double amount;
     private Currency currency;
-    private Date date;
+    private LocalDateTime dateTime;
     private Color color;
     private Timestamp createdAt;
 

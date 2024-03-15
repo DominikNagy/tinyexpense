@@ -1,6 +1,7 @@
 package com.dominiknagy.tinyexpense.TinyExpense.controllers;
 
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateCategoryRequest;
+import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateExpenseRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.GenericResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.CategoryService;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ExpenseService;
@@ -17,19 +18,15 @@ public class ApplicationController {
     private final ExpenseService expenseService;
     private final CategoryService categoryService;
 
-//    @PostMapping("/expenses")
-//    public ResponseEntity<?> createExpense(@RequestBody CreateExpenseRequest createExpenseRequest) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//
-//        return ResponseEntity.status(HttpStatus.CREATED)
-//                .body(expenseService.createExpense(createExpenseRequest, accountId));
-//    }
-//
-//    @GetMapping("/expenses")
-//    public ResponseEntity<?> retrieveExpenses() {
-//        return ResponseEntity.ok(expenseService.retrieveExpenses(accountId));
-//    }
+    @PostMapping("/expenses")
+    public ResponseEntity<?> createExpense(@RequestBody CreateExpenseRequest createExpenseRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(expenseService.createExpense(createExpenseRequest));
+    }
+
+    @GetMapping("/expenses")
+    public ResponseEntity<?> retrieveExpenses() {
+        return ResponseEntity.ok(expenseService.retrieveExpenses());
+    }
 
     @GetMapping("/expenses/{expenseId}")
     public ResponseEntity<?> retrieveExpense(@PathVariable long expenseId) {

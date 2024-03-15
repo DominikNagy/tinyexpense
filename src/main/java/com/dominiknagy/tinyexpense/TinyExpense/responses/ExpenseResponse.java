@@ -16,6 +16,5 @@ public class ExpenseResponse {
     private Color color;
     private String categoryName;
     private Color categoryColor;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDateTime dateTime;
 }

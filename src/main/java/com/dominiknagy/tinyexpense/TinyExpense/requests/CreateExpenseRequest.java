@@ -4,14 +4,14 @@ import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Color;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Currency;
 import lombok.Data;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class CreateExpenseRequest {
-    private long expenseCategoryId;
+    private long categoryId;
     private String expenseDescription;
     private Double amount;
     private Currency currency;
-    private Date date;
+    private LocalDateTime dateTime;
     private Color color;
 }

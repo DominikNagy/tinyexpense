@@ -5,6 +5,7 @@ import com.dominiknagy.tinyexpense.TinyExpense.repositories.ExpenseRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateExpenseRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.ExpenseResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ExpenseService;
+import com.dominiknagy.tinyexpense.TinyExpense.utility.Mapper;
 import com.dominiknagy.tinyexpense.TinyExpense.utility.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,19 +18,18 @@ import java.util.List;
 public class ExpenseServiceImpl implements ExpenseService {
 
     private final ExpenseRepository expenseRepository;
-    private final UserServiceImpl accountService;
     private final CategoryServiceImpl expenseCategoryService;
 
     @Override
     public Expense createExpense(CreateExpenseRequest createExpenseRequest) {
         Expense expense = new Expense();
-        expense.setCategory(expenseCategoryService.retrieveCategory(createExpenseRequest.getExpenseCategoryId()));
+        expense.setCategory(expenseCategoryService.retrieveCategory(createExpenseRequest.getCategoryId()));
         expense.setUser(UserUtils.authedUser());
         expense.setExpenseDescription(createExpenseRequest.getExpenseDescription());
         expense.setAmount(createExpenseRequest.getAmount());
         expense.setColor(createExpenseRequest.getColor());
         expense.setCurrency(createExpenseRequest.getCurrency());
-        expense.setDate(createExpenseRequest.getDate());
+        expense.setDateTime(createExpenseRequest.getDateTime());
 
         return expenseRepository.save(expense);
     }
@@ -40,22 +40,12 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    public List<ExpenseResponse> retrieveExpenses(String accountId) {
-        List<Expense> expenses = expenseRepository.findExpensesByUser(accountService.retrieveUser(accountId));
+    public List<ExpenseResponse> retrieveExpenses() {
+        List<Expense> expenses = expenseRepository.findExpensesByUser(UserUtils.authedUser());
         List<ExpenseResponse> expenseResponses = new ArrayList<>();
 
         for (Expense expense : expenses) {
-            ExpenseResponse expenseResponse = new ExpenseResponse();
-            expenseResponse.setId(expense.getId());
-            expenseResponse.setExpenseDescription(expense.getExpenseDescription());
-//            expenseResponse.setDate(expense.getDate());
-            expenseResponse.setCurrency(expense.getCurrency());
-            expenseResponse.setAmount(expense.getAmount());
-            expenseResponse.setColor(expense.getColor());
-            expenseResponse.setCategoryName(expense.getCategory().getCategoryName());
-            expenseResponse.setCategoryColor(expense.getCategory().getColor());
-
-            expenseResponses.add(expenseResponse);
+            expenseResponses.add(Mapper.mapExpenseResponse(expense));
         }
 
         return expenseResponses;

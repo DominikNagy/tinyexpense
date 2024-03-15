@@ -1,8 +1,10 @@
 package com.dominiknagy.tinyexpense.TinyExpense.utility;
 
 import com.dominiknagy.tinyexpense.TinyExpense.entities.Category;
+import com.dominiknagy.tinyexpense.TinyExpense.entities.Expense;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.account.UserProfile;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.CategoryResponse;
+import com.dominiknagy.tinyexpense.TinyExpense.responses.ExpenseResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.UserProfileResponse;
 
 public class Mapper {
@@ -27,5 +29,19 @@ public class Mapper {
         categoryResponse.setCreatedAt(category.getCreatedAt());
 
         return categoryResponse;
+    }
+
+    public static ExpenseResponse mapExpenseResponse(Expense expense) {
+        ExpenseResponse expenseResponse = new ExpenseResponse();
+        expenseResponse.setId(expense.getId());
+        expenseResponse.setExpenseDescription(expense.getExpenseDescription());
+        expenseResponse.setDateTime(expense.getDateTime());
+        expenseResponse.setCurrency(expense.getCurrency());
+        expenseResponse.setAmount(expense.getAmount());
+        expenseResponse.setColor(expense.getColor());
+        expenseResponse.setCategoryName(expense.getCategory().getCategoryName());
+        expenseResponse.setCategoryColor(expense.getCategory().getColor());
+
+        return expenseResponse;
     }
 }

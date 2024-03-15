@@ -9,7 +9,7 @@ import java.util.List;
 public interface ExpenseService {
     Expense createExpense(CreateExpenseRequest createExpenseRequest);
     Expense retrieveExpense(long expenseId);
-    List<ExpenseResponse> retrieveExpenses(String accountId);
+    List<ExpenseResponse> retrieveExpenses();
     List<Expense> retrieveExpensesInCategory(long categoryId);
     void deleteExpense(long expenseId);
 }
