@@ -9,4 +9,5 @@ public interface UserService {
     User retrieveUser(String userId);
     User retrieveUserByEmail(String userEmail);
     UserDetailsService userDetailsService();
+    User lastLoginUpdate(User user);
 }

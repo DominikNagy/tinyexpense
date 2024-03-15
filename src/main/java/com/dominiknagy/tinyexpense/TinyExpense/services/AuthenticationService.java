@@ -1,7 +1,5 @@
 package com.dominiknagy.tinyexpense.TinyExpense.services;
 
-import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Currency;
-import com.dominiknagy.tinyexpense.TinyExpense.repositories.UserRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.LoginUserRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.LoginResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.UserProfileResponse;
@@ -17,9 +15,10 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final UserRepository userRepository;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final ProfileService profileService;
 
     public LoginResponse login(String authorizationHeader) {
 
@@ -28,20 +27,19 @@ public class AuthenticationService {
         String decodedCredentials = new String(decodedBytes, StandardCharsets.UTF_8);
         String[] credentials = decodedCredentials.split(":", 2);
 
+
+
         LoginUserRequest loginUserRequest = new LoginUserRequest();
         loginUserRequest.setEmail(credentials[0]);
         loginUserRequest.setPassword(credentials[1]);
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginUserRequest.getEmail(), loginUserRequest.getPassword()));
-        var user = userRepository.findUserByEmail(loginUserRequest.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+        var user = userService.retrieveUser(loginUserRequest.getEmail());
         var jwt = jwtService.generateToken(user);
 
-        UserProfileResponse userProfileResponse = new UserProfileResponse();
-        userProfileResponse.setEmail(user.getEmail());
-        userProfileResponse.setName(user.getName());
-        userProfileResponse.setCurrency(Currency.EUR);
+        userService.lastLoginUpdate(user);
+        UserProfileResponse userProfileResponse = profileService.retrieveUserProfile(user.getEmail());
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwt);

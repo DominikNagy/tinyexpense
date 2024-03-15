@@ -4,12 +4,15 @@ import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateUserRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.implementations.UserServiceImpl;
 import com.dominiknagy.tinyexpense.TinyExpense.services.AuthenticationService;
+import com.dominiknagy.tinyexpense.TinyExpense.services.ProfileService;
+import com.dominiknagy.tinyexpense.TinyExpense.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,23 +25,22 @@ import java.net.URI;
 @CrossOrigin(origins = "*")
 public class UserController {
 
-    private final UserServiceImpl accountServiceImpl;
+    private final UserService userService;
     private final AuthenticationService authenticationService;
+    private final ProfileService profileService;
 
     @PostMapping("/create")
     public ResponseEntity<?> createAccount(@RequestBody CreateUserRequest createUserRequest) {
-        User user = accountServiceImpl.createUser(createUserRequest);
-        if (user == null) return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        User user = userService.createUser(createUserRequest);
         log.info("New account created '" + createUserRequest.getName()+ "'");
-        return ResponseEntity.created(URI.create("/account/" + user.getId())).body(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(profileService.retrieveUserProfile(user.getEmail()));
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<?> retrieveAccount(Authentication authentication) {
-        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+    public ResponseEntity<?> retrieveProfile() {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return ResponseEntity.ok(accountServiceImpl.retrieveUser(userDetails.getUsername()));
-        } else return null;
+            return ResponseEntity.ok(profileService.retrieveUserProfile(userDetails.getUsername()));
     }
 
     @PostMapping("/login")
