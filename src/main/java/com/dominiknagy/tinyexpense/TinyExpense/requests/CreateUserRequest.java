@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import javax.validation.constraints.NotNull;
 
 @Data
-public class CreateAccountRequest {
+public class CreateUserRequest {
 
     @NotNull
     private String name;

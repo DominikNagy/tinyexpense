@@ -6,11 +6,8 @@ import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateExpenseRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.ExpenseResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,14 +16,14 @@ import java.util.List;
 public class ExpenseServiceImpl implements ExpenseService {
 
     private final ExpenseRepository expenseRepository;
-    private final AccountServiceImpl accountService;
-    private final ExpenseCategoryServiceImpl expenseCategoryService;
+    private final UserServiceImpl accountService;
+    private final CategoryServiceImpl expenseCategoryService;
 
     @Override
     public Expense createExpense(CreateExpenseRequest createExpenseRequest, String accountId) {
         Expense expense = new Expense();
-        expense.setExpenseCategory(expenseCategoryService.retrieveExpenseCategory(createExpenseRequest.getExpenseCategoryId()));
-        expense.setAccount(accountService.retrieveAccount(accountId));
+        expense.setCategory(expenseCategoryService.retrieveCategory(createExpenseRequest.getExpenseCategoryId()));
+        expense.setUser(accountService.retrieveUser(accountId));
         expense.setExpenseDescription(createExpenseRequest.getExpenseDescription());
         expense.setAmount(createExpenseRequest.getAmount());
         expense.setColor(createExpenseRequest.getColor());
@@ -43,19 +40,19 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public List<ExpenseResponse> retrieveExpenses(String accountId) {
-        List<Expense> expenses = expenseRepository.findExpensesByAccount(accountService.retrieveAccount(accountId));
+        List<Expense> expenses = expenseRepository.findExpensesByUser(accountService.retrieveUser(accountId));
         List<ExpenseResponse> expenseResponses = new ArrayList<>();
 
         for (Expense expense : expenses) {
             ExpenseResponse expenseResponse = new ExpenseResponse();
             expenseResponse.setId(expense.getId());
             expenseResponse.setExpenseDescription(expense.getExpenseDescription());
-            expenseResponse.setDate(expense.getDate());
+//            expenseResponse.setDate(expense.getDate());
             expenseResponse.setCurrency(expense.getCurrency());
             expenseResponse.setAmount(expense.getAmount());
             expenseResponse.setColor(expense.getColor());
-            expenseResponse.setCategoryName(expense.getExpenseCategory().getCategoryName());
-            expenseResponse.setCategoryColor(expense.getExpenseCategory().getColor());
+            expenseResponse.setCategoryName(expense.getCategory().getCategoryName());
+            expenseResponse.setCategoryColor(expense.getCategory().getColor());
 
             expenseResponses.add(expenseResponse);
         }
@@ -65,7 +62,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public List<Expense> retrieveExpensesInCategory(long categoryId) {
-        return expenseRepository.findExpensesByExpenseCategory(expenseCategoryService.retrieveExpenseCategory(categoryId));
+        return expenseRepository.findExpensesByCategory(expenseCategoryService.retrieveCategory(categoryId));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.dominiknagy.tinyexpense.TinyExpense.requests;
 
-import com.dominiknagy.tinyexpense.TinyExpense.entities.Color;
-import com.dominiknagy.tinyexpense.TinyExpense.entities.Currency;
+import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Color;
+import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Currency;
 import lombok.Data;
 
 import java.sql.Date;

@@ -16,3 +16,16 @@ spring:
       ddl-auto: update
 server:
   port : 8080
+#logging:
+#  level:
+#    root: WARN
+#    web: INFO
+#    com:
+#      example: DEBUG
+token:
+  # one year valid jwt
+  expirationms: 31556952000
+  # JWT secret key
+  # node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+  secret:
+    key: ${JWT_SECRET_KEY}
