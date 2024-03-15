@@ -5,6 +5,7 @@ import com.dominiknagy.tinyexpense.TinyExpense.repositories.ExpenseRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateExpenseRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.ExpenseResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ExpenseService;
+import com.dominiknagy.tinyexpense.TinyExpense.utility.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,10 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final CategoryServiceImpl expenseCategoryService;
 
     @Override
-    public Expense createExpense(CreateExpenseRequest createExpenseRequest, String accountId) {
+    public Expense createExpense(CreateExpenseRequest createExpenseRequest) {
         Expense expense = new Expense();
         expense.setCategory(expenseCategoryService.retrieveCategory(createExpenseRequest.getExpenseCategoryId()));
-        expense.setUser(accountService.retrieveUser(accountId));
+        expense.setUser(UserUtils.authedUser());
         expense.setExpenseDescription(createExpenseRequest.getExpenseDescription());
         expense.setAmount(createExpenseRequest.getAmount());
         expense.setColor(createExpenseRequest.getColor());

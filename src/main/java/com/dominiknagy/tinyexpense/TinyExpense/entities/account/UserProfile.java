@@ -12,6 +12,8 @@ public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Enumerated(EnumType.STRING)
     private Currency currency;
 
     @OneToOne(fetch = FetchType.EAGER)

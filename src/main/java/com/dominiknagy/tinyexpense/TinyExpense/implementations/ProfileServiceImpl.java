@@ -3,7 +3,7 @@ package com.dominiknagy.tinyexpense.TinyExpense.implementations;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.account.UserProfile;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Currency;
-import com.dominiknagy.tinyexpense.TinyExpense.mapper.UserMapper;
+import com.dominiknagy.tinyexpense.TinyExpense.utility.Mapper;
 import com.dominiknagy.tinyexpense.TinyExpense.repositories.ProfileRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.UserProfileResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ProfileService;
@@ -20,7 +20,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     public UserProfileResponse retrieveUserProfile(String userEmail) {
         UserProfile userProfile = profileRepository.findByUserEmail(userEmail).orElseThrow();
-        return UserMapper.userProfileResponse(userProfile);
+        return Mapper.mapUserProfileResponse(userProfile);
     }
 
     @Override
@@ -31,6 +31,6 @@ public class ProfileServiceImpl implements ProfileService {
 
         userProfile = profileRepository.save(userProfile);
 
-        return UserMapper.userProfileResponse(userProfile);
+        return Mapper.mapUserProfileResponse(userProfile);
     }
 }

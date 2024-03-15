@@ -7,8 +7,9 @@ import com.dominiknagy.tinyexpense.TinyExpense.responses.CategoryResponse;
 import java.util.List;
 
 public interface CategoryService {
-    Category retrieveCategory(long expenseCategoryId);
-    List<CategoryResponse> retrieveCategories(String userEmail);
-    Category createCategory(CreateCategoryRequest createCategoryRequest, String userEmail);
+    CategoryResponse retrieveCategoryAsResponse(long categoryId);
+    Category retrieveCategory(long categoryId);
+    List<CategoryResponse> retrieveCategories();
+    CategoryResponse createCategory(CreateCategoryRequest createCategoryRequest);
     void deleteCategory(long categoryId);
 }
