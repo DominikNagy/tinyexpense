@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -31,9 +33,12 @@ public class UserController {
         return ResponseEntity.created(URI.create("/account/" + user.getId())).body(user);
     }
 
-    @GetMapping("/{accountId}")
-    public ResponseEntity<?> retrieveAccount(@PathVariable("accountId") String accountId) {
-        return ResponseEntity.ok(accountServiceImpl.retrieveUser(accountId));
+    @GetMapping("/profile")
+    public ResponseEntity<?> retrieveAccount(Authentication authentication) {
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            return ResponseEntity.ok(accountServiceImpl.retrieveUser(userDetails.getUsername()));
+        } else return null;
     }
 
     @PostMapping("/login")
