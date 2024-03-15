@@ -45,7 +45,7 @@ public class AuthenticationService {
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwt);
-        loginResponse.setUserProfileResponse(userProfileResponse);
+        loginResponse.setUserProfile(userProfileResponse);
 
         return loginResponse;
     }
