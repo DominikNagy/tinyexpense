@@ -20,7 +20,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Dominik\",\n    \"email\": \"asd3@asd.com\",\n    \"password\": \"jabu123hruska!\"\n}",
+							"raw": "{\n    \"name\": \"Petko\",\n    \"email\": \"Petko2@gmail.com\",\n    \"password\": \"jabu123hruska\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,12 +62,12 @@
 							"basic": [
 								{
 									"key": "username",
-									"value": "asd3@asd.com",
+									"value": "Petko1@gmail.com",
 									"type": "string"
 								},
 								{
 									"key": "password",
-									"value": "jabu123hruska!",
+									"value": "jabu123hruska",
 									"type": "string"
 								}
 							]
@@ -140,7 +140,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"categoryName\": \"Housingos\",\n    \"color\": \"RED\"\n}",
+									"raw": "{\n    \"categoryName\": \"Housing\",\n    \"color\": \"RED\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -154,41 +154,6 @@
 									],
 									"path": [
 										"categories"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "retrieve category",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-										"type": "default",
-										"disabled": true
-									}
-								],
-								"url": {
-									"raw": "{{url}}/categories/1",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"categories",
-										"1"
 									]
 								}
 							},
@@ -227,49 +192,9 @@
 								}
 							},
 							"response": []
-						}
-					]
-				},
-				{
-					"name": "expenses",
-					"item": [
-						{
-							"name": "delete expense",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-										"type": "default",
-										"disabled": true
-									}
-								],
-								"url": {
-									"raw": "{{url}}/expenses/161",
-									"host": [
-										"{{url}}"
-									],
-									"path": [
-										"expenses",
-										"161"
-									]
-								}
-							},
-							"response": []
 						},
 						{
-							"name": "retrieve expenses in a category",
+							"name": "retrieve category",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -282,28 +207,53 @@
 									]
 								},
 								"method": "GET",
-								"header": [
-									{
-										"key": "Authorization",
-										"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
-										"type": "default",
-										"disabled": true
-									}
-								],
+								"header": [],
 								"url": {
-									"raw": "{{url}}/categories/1/expenses",
+									"raw": "{{url}}/categories/52",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"categories",
-										"1",
-										"expenses"
+										"52"
 									]
 								}
 							},
 							"response": []
 						},
+						{
+							"name": "delete category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/categories/52",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"52"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "expenses",
+					"item": [
 						{
 							"name": "create expense",
 							"request": {
@@ -321,7 +271,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"expenseCategoryId\": 53,\n    \"expenseDescription\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.\",\n    \"amount\": 53.01,\n    \"currency\": \"EUR\",\n    \"timestamp\": \"2023-04-17\",\n    \"color\": \"BLACK\"\n}",
+									"raw": "{\n    \"categoryId\": 152,\n    \"expenseDescription\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.\",\n    \"amount\": 53.01,\n    \"currency\": \"EUR\",\n    \"date\": \"2024-03-15T23:57:44.3255311\",\n    \"color\": \"BLACK\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -363,13 +313,83 @@
 									}
 								],
 								"url": {
-									"raw": "{{url}}/expenses/161",
+									"raw": "{{url}}/expenses",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"expenses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete expense",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/expenses/154",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"expenses",
-										"161"
+										"154"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "retrieve expenses in a category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Basic dXNlcjphMzA3Mjg3Yi0yNjFlLTQ3MGEtOGJhMy1jNWEzNDlkZTA1ZTU=",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "{{url}}/categories/152/expenses",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"152",
+										"expenses"
 									]
 								}
 							},
@@ -398,13 +418,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{url}}/expenses/160",
+									"raw": "{{url}}/expenses/154",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"expenses",
-										"160"
+										"154"
 									]
 								}
 							},

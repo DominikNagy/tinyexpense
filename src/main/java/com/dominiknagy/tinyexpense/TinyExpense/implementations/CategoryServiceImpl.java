@@ -23,15 +23,13 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category retrieveCategory(long categoryId) {
-        return categoryRepository.findCategoryById(categoryId).orElseThrow();
+        return categoryRepository.findCategoryByIdAndUser(categoryId, UserUtils.authedUser()).orElseThrow();
     }
 
     @Override
     public CategoryResponse retrieveCategoryAsResponse(long categoryId) {
-        Category category = categoryRepository.findCategoryById(categoryId).orElseThrow();
-        if (category.getUser() == UserUtils.authedUser())
-           return Mapper.mapCategoryResponse(categoryRepository.findCategoryById(categoryId).orElseThrow());
-        else throw new AuthorizationServiceException("User not authorized for this resource");
+        Category category = categoryRepository.findCategoryByIdAndUser(categoryId, UserUtils.authedUser()).orElseThrow();
+        return Mapper.mapCategoryResponse(category);
     }
 
     @Override
@@ -61,9 +59,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteCategory(long categoryId) {
-        Category category = categoryRepository.findCategoryById(categoryId).orElseThrow();
-        if (category.getUser() == UserUtils.authedUser())
-            categoryRepository.deleteById(categoryId);
-        else throw new AuthorizationServiceException("User not authorized");
+        Category category = categoryRepository.findCategoryByIdAndUser(categoryId, UserUtils.authedUser()).orElseThrow();
+        categoryRepository.deleteById(categoryId);
     }
 }
