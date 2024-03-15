@@ -7,9 +7,9 @@ import com.dominiknagy.tinyexpense.TinyExpense.responses.ExpenseResponse;
 import java.util.List;
 
 public interface ExpenseService {
-    Expense createExpense(CreateExpenseRequest createExpenseRequest);
-    Expense retrieveExpense(long expenseId);
+    ExpenseResponse createExpense(CreateExpenseRequest createExpenseRequest);
+    ExpenseResponse retrieveExpense(long expenseId);
     List<ExpenseResponse> retrieveExpenses();
-    List<Expense> retrieveExpensesInCategory(long categoryId);
+    List<ExpenseResponse> retrieveExpensesInCategory(long categoryId);
     void deleteExpense(long expenseId);
 }
