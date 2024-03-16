@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/health")
-@CrossOrigin(origins = "*")
 public class HealthCheckController {
 
     @GetMapping("/status")
