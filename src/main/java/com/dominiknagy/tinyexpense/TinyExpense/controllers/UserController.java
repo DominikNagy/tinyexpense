@@ -22,6 +22,7 @@ import java.net.URI;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/account")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     private final UserService userService;
