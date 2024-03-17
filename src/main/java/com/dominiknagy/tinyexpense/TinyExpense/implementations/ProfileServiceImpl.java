@@ -7,6 +7,7 @@ import com.dominiknagy.tinyexpense.TinyExpense.utility.Mapper;
 import com.dominiknagy.tinyexpense.TinyExpense.repositories.ProfileRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.UserProfileResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ProfileService;
+import com.dominiknagy.tinyexpense.TinyExpense.utility.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,14 @@ public class ProfileServiceImpl implements ProfileService {
 
 
     @Override
-    public UserProfileResponse retrieveUserProfile(String userEmail) {
+    public UserProfileResponse retrieveUserProfileByEmail(String userEmail) {
         UserProfile userProfile = profileRepository.findByUserEmail(userEmail).orElseThrow();
+        return Mapper.mapUserProfileResponse(userProfile);
+    }
+
+    @Override
+    public UserProfileResponse retrieveUserProfile() {
+        UserProfile userProfile = profileRepository.findByUser(UserUtils.authedUser()).orElseThrow();
         return Mapper.mapUserProfileResponse(userProfile);
     }
 
