@@ -5,8 +5,10 @@ import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.account.UserProfile;
 import com.dominiknagy.tinyexpense.TinyExpense.repositories.UserRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateUserRequest;
+import com.dominiknagy.tinyexpense.TinyExpense.requests.PasswordChangeRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ProfileService;
 import com.dominiknagy.tinyexpense.TinyExpense.services.UserService;
+import com.dominiknagy.tinyexpense.TinyExpense.utility.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,6 +42,15 @@ public class UserServiceImpl implements UserService {
     public User lastLoginUpdate(User user) {
         user.setLastLogin(LocalDateTime.now());
         return userRepository.save(user);
+    }
+
+    @Override
+    public void passwordChange(PasswordChangeRequest passwordChangeRequest) {
+        User user = userRepository.findUserById(UserUtils.authedUser().getId()).orElseThrow();
+        if (passwordEncoder.matches(passwordChangeRequest.getOldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(passwordChangeRequest.getNewPassword()));
+            userRepository.save(user);
+        }
     }
 
     @Override

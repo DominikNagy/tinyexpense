@@ -27,8 +27,6 @@ public class AuthenticationService {
         String decodedCredentials = new String(decodedBytes, StandardCharsets.UTF_8);
         String[] credentials = decodedCredentials.split(":", 2);
 
-
-
         LoginUserRequest loginUserRequest = new LoginUserRequest();
         loginUserRequest.setEmail(credentials[0]);
         loginUserRequest.setPassword(credentials[1]);
@@ -39,7 +37,7 @@ public class AuthenticationService {
         var jwt = jwtService.generateToken(user);
 
         userService.lastLoginUpdate(user);
-        UserProfileResponse userProfileResponse = profileService.retrieveUserProfile(user.getEmail());
+        UserProfileResponse userProfileResponse = profileService.retrieveUserProfileByEmail(user.getEmail());
 
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(jwt);
