@@ -1,6 +1,7 @@
 package com.dominiknagy.tinyexpense.TinyExpense.implementations;
 
 import com.dominiknagy.tinyexpense.TinyExpense.entities.Expense;
+import com.dominiknagy.tinyexpense.TinyExpense.exception.ResourceNotFoundException;
 import com.dominiknagy.tinyexpense.TinyExpense.repositories.ExpenseRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateExpenseRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.ExpenseResponse;
@@ -32,7 +33,8 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public ExpenseResponse retrieveExpense(long expenseId) {
-        Expense expense = expenseRepository.findExpenseByIdAndUser(expenseId, UserUtils.authedUser()).orElseThrow();
+        Expense expense = expenseRepository.findExpenseByIdAndUser(expenseId, UserUtils.authedUser())
+                .orElseThrow(() -> new ResourceNotFoundException("Expense could not be found"));
         return Mapper.mapExpenseResponse(expense);
     }
 

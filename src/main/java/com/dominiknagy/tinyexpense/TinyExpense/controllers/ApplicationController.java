@@ -6,6 +6,7 @@ import com.dominiknagy.tinyexpense.TinyExpense.responses.GenericResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.CategoryService;
 import com.dominiknagy.tinyexpense.TinyExpense.services.ExpenseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,7 +51,7 @@ public class ApplicationController {
     }
 
     @GetMapping("/categories/{categoryId}")
-    public ResponseEntity<?> retrieveExpenseCategory(@PathVariable long categoryId) {
+    public ResponseEntity<?> retrieveExpenseCategory(@PathVariable long categoryId) throws ChangeSetPersister.NotFoundException {
         return ResponseEntity.ok(categoryService.retrieveCategoryAsResponse(categoryId));
     }
 

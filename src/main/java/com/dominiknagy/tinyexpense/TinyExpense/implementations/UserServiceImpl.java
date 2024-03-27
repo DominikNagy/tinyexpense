@@ -10,6 +10,7 @@ import com.dominiknagy.tinyexpense.TinyExpense.services.ProfileService;
 import com.dominiknagy.tinyexpense.TinyExpense.services.UserService;
 import com.dominiknagy.tinyexpense.TinyExpense.utility.UserUtils;
 import lombok.RequiredArgsConstructor;
+import org.postgresql.util.PSQLException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

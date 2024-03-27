@@ -1,15 +1,14 @@
 package com.dominiknagy.tinyexpense.TinyExpense.implementations;
 
 import com.dominiknagy.tinyexpense.TinyExpense.entities.Category;
+import com.dominiknagy.tinyexpense.TinyExpense.exception.ResourceNotFoundException;
 import com.dominiknagy.tinyexpense.TinyExpense.repositories.CategoryRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateCategoryRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.CategoryResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.CategoryService;
-import com.dominiknagy.tinyexpense.TinyExpense.services.UserService;
 import com.dominiknagy.tinyexpense.TinyExpense.utility.Mapper;
 import com.dominiknagy.tinyexpense.TinyExpense.utility.UserUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,7 +27,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryResponse retrieveCategoryAsResponse(long categoryId) {
-        Category category = categoryRepository.findCategoryByIdAndUser(categoryId, UserUtils.authedUser()).orElseThrow();
+        Category category = categoryRepository.findCategoryByIdAndUser(categoryId, UserUtils.authedUser())
+                .orElseThrow(() -> new ResourceNotFoundException("Category could not be found"));
         return Mapper.mapCategoryResponse(category);
     }
 
