@@ -1,6 +1,8 @@
 package com.dominiknagy.tinyexpense.TinyExpense.implementations;
 
 import com.dominiknagy.tinyexpense.TinyExpense.entities.Category;
+import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
+import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Color;
 import com.dominiknagy.tinyexpense.TinyExpense.exception.ResourceNotFoundException;
 import com.dominiknagy.tinyexpense.TinyExpense.repositories.CategoryRepository;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateCategoryRequest;
@@ -61,5 +63,15 @@ public class CategoryServiceImpl implements CategoryService {
     public void deleteCategory(long categoryId) {
         Category category = categoryRepository.findCategoryByIdAndUser(categoryId, UserUtils.authedUser()).orElseThrow();
         categoryRepository.deleteById(categoryId);
+    }
+
+    @Override
+    public void createDefaultCategory(User user) {
+        Category category = new Category();
+        category.setCategoryName("default.");
+        category.setUser(user);
+        category.setColor(Color.WHITE);
+
+        categoryRepository.save(category);
     }
 }
