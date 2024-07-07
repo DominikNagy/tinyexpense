@@ -15,7 +15,12 @@ spring:
     hibernate:
       ddl-auto: update
 server:
-  port : 8080
+  port: 8443
+  ssl:
+    key-store: classpath:config/tinyexpense.p12
+    key-store-password: ${CERTIFICATE_PASSWORD}
+    key-store-type: PKCS12
+    key-alias: tinyexpense
 #logging:
 #  level:
 #    root: WARN
