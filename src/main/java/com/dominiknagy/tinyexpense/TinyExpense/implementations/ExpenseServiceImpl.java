@@ -10,6 +10,7 @@ import com.dominiknagy.tinyexpense.TinyExpense.utility.Mapper;
 import com.dominiknagy.tinyexpense.TinyExpense.utility.UserUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,7 +41,9 @@ public class ExpenseServiceImpl implements ExpenseService {
 
     @Override
     public List<ExpenseResponse> retrieveExpenses() {
-        List<Expense> expenses = expenseRepository.findExpensesByUser(UserUtils.authedUser());
+        List<Expense> expenses = expenseRepository.findExpensesByUser(
+                UserUtils.authedUser(),
+                Sort.by(Sort.Direction.DESC, "dateTime"));
         List<ExpenseResponse> expenseResponses = new ArrayList<>();
 
         for (Expense expense : expenses) {
