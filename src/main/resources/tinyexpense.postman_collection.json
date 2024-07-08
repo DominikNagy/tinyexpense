@@ -20,7 +20,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Petko\",\n    \"email\": \"Petko2@gmail.com\",\n    \"password\": \"jabu123hruska\"\n}",
+							"raw": "{\n    \"name\": \"Dominik\",\n    \"email\": \"e@e.e\",\n    \"password\": \"e\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -61,13 +61,13 @@
 							"type": "basic",
 							"basic": [
 								{
-									"key": "username",
-									"value": "Petko1@gmail.com",
+									"key": "password",
+									"value": "lmao",
 									"type": "string"
 								},
 								{
-									"key": "password",
-									"value": "jabu123hruska",
+									"key": "username",
+									"value": "lmao@lmao.lmao",
 									"type": "string"
 								}
 							]
@@ -82,6 +82,43 @@
 							"path": [
 								"account",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"newPassword\": \"kekw123\",\n    \"oldPassword\": \"jabu123hruska\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/account/change-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"account",
+								"change-password"
 							]
 						}
 					},
@@ -140,7 +177,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"categoryName\": \"Housing\",\n    \"color\": \"RED\"\n}",
+									"raw": "{\n    \"categoryName\": \"alza.\",\n    \"color\": \"BLACK\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -154,6 +191,43 @@
 									],
 									"path": [
 										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"categoryName\": \"updated.\",\n    \"color\": \"BLACK\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/categories/202",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"categories",
+										"202"
 									]
 								}
 							},
@@ -271,7 +345,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"categoryId\": 152,\n    \"expenseDescription\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.\",\n    \"amount\": 53.01,\n    \"currency\": \"EUR\",\n    \"date\": \"2024-03-15T23:57:44.3255311\",\n    \"color\": \"BLACK\"\n}",
+									"raw": "{\n    \"categoryId\": 103,\n    \"expenseDescription\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.\",\n    \"amount\": 53.01,\n    \"currency\": \"EUR\",\n    \"dateTime\": \"2024-03-11T23:57:44.3255311\",\n    \"color\": \"BLACK\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -347,13 +421,13 @@
 									}
 								],
 								"url": {
-									"raw": "{{url}}/expenses/154",
+									"raw": "{{url}}/expenses/7",
 									"host": [
 										"{{url}}"
 									],
 									"path": [
 										"expenses",
-										"154"
+										"7"
 									]
 								}
 							},
@@ -459,6 +533,16 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "80.253.88.210"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MUBnbWFpbC5jb20iLCJpYXQiOjE3MTE1MzA0NzksImV4cCI6MTc0MzA4NzQzMX0.Uicnivi7mDYjSiATflmewRB2XwvMm7DiBCMsGeqWUow"
 		}
 	]
 }

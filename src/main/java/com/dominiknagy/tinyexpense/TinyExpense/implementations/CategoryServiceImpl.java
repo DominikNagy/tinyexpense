@@ -5,7 +5,7 @@ import com.dominiknagy.tinyexpense.TinyExpense.entities.account.User;
 import com.dominiknagy.tinyexpense.TinyExpense.entities.enums.Color;
 import com.dominiknagy.tinyexpense.TinyExpense.exception.ResourceNotFoundException;
 import com.dominiknagy.tinyexpense.TinyExpense.repositories.CategoryRepository;
-import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateCategoryRequest;
+import com.dominiknagy.tinyexpense.TinyExpense.requests.CategoryRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.CategoryResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.CategoryService;
 import com.dominiknagy.tinyexpense.TinyExpense.utility.Mapper;
@@ -50,11 +50,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponse createCategory(CreateCategoryRequest createCategoryRequest) {
+    public CategoryResponse createCategory(CategoryRequest categoryRequest) {
         Category category = new Category();
-        category.setCategoryName(createCategoryRequest.getCategoryName());
+        category.setCategoryName(categoryRequest.getCategoryName());
         category.setUser(UserUtils.authedUser());
-        category.setColor(createCategoryRequest.getColor());
+        category.setColor(categoryRequest.getColor());
 
         return Mapper.mapCategoryResponse(categoryRepository.save(category));
     }
@@ -73,5 +73,21 @@ public class CategoryServiceImpl implements CategoryService {
         category.setColor(Color.WHITE);
 
         categoryRepository.save(category);
+    }
+
+    @Override
+    public CategoryResponse updateCategory(long categoryId, CategoryRequest categoryRequest) {
+        Category category = categoryRepository.findCategoryByIdAndUser(categoryId, UserUtils.authedUser())
+                .orElseThrow(() -> new ResourceNotFoundException("Category could not be found"));
+
+        if (categoryRequest.getCategoryName() != null && !categoryRequest.getCategoryName().isEmpty()) {
+            category.setCategoryName(categoryRequest.getCategoryName());
+        }
+
+        if (categoryRequest.getColor() != null) {
+            category.setColor(categoryRequest.getColor());
+        }
+
+        return Mapper.mapCategoryResponse(categoryRepository.save(category));
     }
 }

@@ -1,6 +1,6 @@
 package com.dominiknagy.tinyexpense.TinyExpense.controllers;
 
-import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateCategoryRequest;
+import com.dominiknagy.tinyexpense.TinyExpense.requests.CategoryRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.requests.CreateExpenseRequest;
 import com.dominiknagy.tinyexpense.TinyExpense.responses.GenericResponse;
 import com.dominiknagy.tinyexpense.TinyExpense.services.CategoryService;
@@ -41,8 +41,8 @@ public class ApplicationController {
     }
 
     @PostMapping("/categories")
-    public ResponseEntity<?> createExpenseCategory(@RequestBody CreateCategoryRequest createCategoryRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(createCategoryRequest));
+    public ResponseEntity<?> createExpenseCategory(@RequestBody CategoryRequest categoryRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(categoryRequest));
     }
 
     @GetMapping("/categories")
@@ -61,8 +61,14 @@ public class ApplicationController {
         return ResponseEntity.ok(new GenericResponse("Category deleted."));
     }
 
+    @PatchMapping("/categories/{categoryId}")
+    public ResponseEntity<?> updateExpenseCategory(@PathVariable long categoryId, @RequestBody CategoryRequest categoryRequest) {
+        return ResponseEntity.ok(categoryService.updateCategory(categoryId, categoryRequest));
+    }
+
     @GetMapping("/categories/{categoryId}/expenses")
     public ResponseEntity<?> retrieveExpensesInCategory(@PathVariable long categoryId) {
         return ResponseEntity.ok(expenseService.retrieveExpensesInCategory(categoryId));
     }
+
 }
